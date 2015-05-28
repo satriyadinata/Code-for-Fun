@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.code.bornevia;
+package org.code.bornevia.puzzleA;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -21,7 +21,7 @@ import java.util.logging.Logger;
  */
 public class CustomersCSV {
     private Map<String, Properties> customers = new HashMap<>();
-    private String path, regex;
+    private final String path, regex;
     
     public CustomersCSV (String path, String regex) {
         this.path = path;
