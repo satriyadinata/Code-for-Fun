@@ -1,20 +1,19 @@
 package org.code.bornevia.puzzleB;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import javax.swing.JFileChooser;
 
-/**
- *
- * @author Satriya
- */
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException, 
+            IOException {
         JFileChooser fileChooser = new JFileChooser();
         int output;
         File file = null;
@@ -35,10 +34,6 @@ public class Main {
                 }
                 line = br.readLine();
             }
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         if (size % 2 == 0) {
@@ -65,7 +60,26 @@ public class Main {
                 sb.append("dan ");
                 sb.append(result[result.length - 1]);
             }
+            
+            fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+            fileChooser.setSelectedFile(new File("output.txt"));
+            output = fileChooser.showSaveDialog(fileChooser);
 
+            if (output == JFileChooser.APPROVE_OPTION) {
+                file = fileChooser.getSelectedFile();
+            }
+            
+            try (Writer writer = new BufferedWriter(new OutputStreamWriter(
+                    new FileOutputStream(file.getAbsoluteFile()), "utf-8"))) {
+                writer.write("/*************************** output.txt ****************************/");
+                writer.write(System.lineSeparator());
+                writer.write("/****************************** Start ******************************/");
+                writer.write(System.lineSeparator());
+                writer.write(sb.toString());
+                writer.write(System.lineSeparator());
+                writer.write("/******************************* End *******************************/");
+            }
+            
             System.out.println(sb.toString());
         } else {
             System.out.println("Invalid input size!!");
